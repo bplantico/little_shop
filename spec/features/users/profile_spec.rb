@@ -17,10 +17,13 @@ RSpec.describe 'user profile', type: :feature do
         within '#address-details' do
           expect(page).to have_content("Address: #{@user.address}")
           expect(page).to have_content("#{@user.city}, #{@user.state} #{@user.zip}")
+          expect(page).to have_link("Manage Addresses")
+          expect(page).to have_link("Add New Address")
         end
         expect(page).to have_link('Edit Profile Data')
       end
     end
+
   end
 
   describe 'registered user edits their profile' do
