@@ -24,6 +24,20 @@ RSpec.describe 'user profile', type: :feature do
       end
     end
 
+    it "clicking the 'Manage Addresses' link takes me to a page with all of my addresses" do
+
+      visit login_path
+  	  fill_in "Email", with: @user.email
+  	  fill_in "Password", with: @user.password
+  	  click_button("Log in")
+      visit profile_path
+
+      click_link("Manage Addresses")
+
+      expect(current_path).to eq(profile_addresses_path)
+
+    end
+
   end
 
   describe 'registered user edits their profile' do
