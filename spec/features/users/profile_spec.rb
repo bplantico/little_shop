@@ -24,7 +24,8 @@ RSpec.describe 'user profile', type: :feature do
       end
     end
 
-    it "clicking the 'Manage Addresses' link takes me to a page with all of my addresses" do
+    xit "clicking the 'Manage Addresses' link takes me to a page with all of my addresses" do
+      # @address_1 = create!(:address, user: @user, created_at: yesterday)
 
       visit login_path
   	  fill_in "Email", with: @user.email
@@ -36,7 +37,17 @@ RSpec.describe 'user profile', type: :feature do
 
       expect(current_path).to eq(profile_addresses_path)
 
+      within "#address-#{@address.id}" do
+        expect(page).to have_content("Nickname: #{@address.nickname}")
+        expect(page).to have_content("#{@address.street_address}")
+        expect(page).to have_content("#{@address.city}")
+        expect(page).to have_content("#{@address.state}")
+        expect(page).to have_content("#{@address.zip}")
+      end
+
     end
+
+    it "clicking the 'Add New Address' link takes me to a form to add a new address"
 
   end
 
