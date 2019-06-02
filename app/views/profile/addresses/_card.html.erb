@@ -1,0 +1,15 @@
+<%= tag.div class: "card float-left m-3 address-card #{style_class}" do %>
+
+  <%= tag.section class: "card-body" do %>
+    <%= tag.h5 class: "card-title" do %>
+      <%= address.nickname %>
+    <% end %>
+
+    <p>Address:<br/>
+    <p><%= address.street_address %></p>
+    <p><%= address.city %></p>
+    <p><%= address.state %></p>
+    <p><%= address.zip %></p>
+    
+  <% end %>
+<% end %>

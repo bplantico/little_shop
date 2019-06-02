@@ -2,21 +2,26 @@ require 'rails_helper'
 
 RSpec.describe 'user profile', type: :feature do
   before :each do
-    @user = create(:user)
+    @user_1 = create(:user)
+    @user_2 = create(:user)
+
+    @a1   = Address.create!(active: true, nickname: "home", street_address: "123 Home St", city: "Hometown", state: "Colorado", zip: "80216", user_id: @user_1.id)
+    @a2   = Address.create!(active: false, nickname: "work", street_address: "456 Work St", city: "Worktown", state: "Colorado", zip: "80216", user_id: @user_1.id)
+    @a3   = Address.create!(active: true, nickname: "home", street_address: "2 User St", city: "Usertwotown", state: "Colorado", zip: "80216", user_id: @user_2.id)
   end
 
   describe 'registered user visits their profile' do
     it 'shows user information' do
-      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@user)
+      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@user_1)
 
       visit profile_path
 
       within '#profile-data' do
-        expect(page).to have_content("Role: #{@user.role}")
-        expect(page).to have_content("Email: #{@user.email}")
+        expect(page).to have_content("Role: #{@user_1.role}")
+        expect(page).to have_content("Email: #{@user_1.email}")
         within '#address-details' do
-          expect(page).to have_content("Address: #{@user.address}")
-          expect(page).to have_content("#{@user.city}, #{@user.state} #{@user.zip}")
+          expect(page).to have_content("Address: #{@user_1.address}")
+          expect(page).to have_content("#{@user_1.city}, #{@user_1.state} #{@user_1.zip}")
           expect(page).to have_link("Manage Addresses")
           expect(page).to have_link("Add New Address")
         end
@@ -24,12 +29,11 @@ RSpec.describe 'user profile', type: :feature do
       end
     end
 
-    xit "clicking the 'Manage Addresses' link takes me to a page with all of my addresses" do
-      # @address_1 = create!(:address, user: @user, created_at: yesterday)
+    it "clicking the 'Manage Addresses' link takes me to a page with all of my addresses" do
 
       visit login_path
-  	  fill_in "Email", with: @user.email
-  	  fill_in "Password", with: @user.password
+  	  fill_in "Email", with: @user_1.email
+  	  fill_in "Password", with: @user_1.password
   	  click_button("Log in")
       visit profile_path
 
@@ -37,14 +41,23 @@ RSpec.describe 'user profile', type: :feature do
 
       expect(current_path).to eq(profile_addresses_path)
 
-      within "#address-#{@address.id}" do
-        expect(page).to have_content("Nickname: #{@address.nickname}")
-        expect(page).to have_content("#{@address.street_address}")
-        expect(page).to have_content("#{@address.city}")
-        expect(page).to have_content("#{@address.state}")
-        expect(page).to have_content("#{@address.zip}")
+      within "#address-#{@a1.id}" do
+        expect(page).to have_content("#{@a1.nickname}")
+        expect(page).to have_content("#{@a1.street_address}")
+        expect(page).to have_content("#{@a1.city}")
+        expect(page).to have_content("#{@a1.state}")
+        expect(page).to have_content("#{@a1.zip}")
       end
 
+      within "#address-#{@a2.id}" do
+        expect(page).to have_content("#{@a2.nickname}")
+        expect(page).to have_content("#{@a2.street_address}")
+        expect(page).to have_content("#{@a2.city}")
+        expect(page).to have_content("#{@a2.state}")
+        expect(page).to have_content("#{@a2.zip}")
+      end
+
+      expect(page).to_not have_content("#{@a3.street_address}")
     end
 
     it "clicking the 'Add New Address' link takes me to a form to add a new address"
@@ -61,8 +74,8 @@ RSpec.describe 'user profile', type: :feature do
         click_link 'Edit'
 
         expect(current_path).to eq('/profile/edit')
-        expect(find_field('Name').value).to eq(@user.name)
-        expect(find_field('Email').value).to eq(@user.email)
+        expect(find_field('Name').value).to eq(@user_1.name)
+        expect(find_field('Email').value).to eq(@user_1.email)
 
         expect(find_field('Password').value).to eq(nil)
         expect(find_field('Password confirmation').value).to eq(nil)
@@ -83,7 +96,7 @@ RSpec.describe 'user profile', type: :feature do
       describe 'succeeds with allowable updates' do
         scenario 'all attributes are updated' do
           login_as(@user)
-          old_digest = @user.password_digest
+          old_digest = @user_1.password_digest
 
           visit edit_profile_path
 
@@ -101,7 +114,7 @@ RSpec.describe 'user profile', type: :feature do
 
           click_button 'Submit'
 
-          updated_user = User.find(@user.id)
+          updated_user = User.find(@user_1.id)
 
           expect(current_path).to eq(profile_path)
           expect(page).to have_content("Your profile has been updated")

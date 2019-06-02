@@ -1,3 +1,10 @@
 <!-- Profille::Addresses View -->
 
 <h1>Addresses</h1>
+
+<% @addresses.each do |address| %>
+
+  <%= tag.section id: "address-#{address.id}" do %>
+  <%= render partial: "card", locals: {address: address, style_class: "address-index-card"}%>
+  <% end %>
+<% end %>

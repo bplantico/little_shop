@@ -66,7 +66,7 @@ RSpec.describe 'the registration page' do
 
       expect(current_path).to eq(registration_path)
       expect(page).to have_content("Email has already been taken")
-  
+
       expect(page).to have_css("input[value='name_1']")
       expect(page).to have_css("input[value='address_1']")
       expect(page).to have_css("input[value='city_1']")

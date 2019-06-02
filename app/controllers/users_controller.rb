@@ -26,7 +26,7 @@ class UsersController < ApplicationController
     else
       flash.now[:danger] = @user.errors.full_messages
       @user.update(email: "", password: "")
-      render :new
+      render '/users/new', :addresses_zip => @address.zip
     end
   end
 

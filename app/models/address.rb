@@ -7,6 +7,6 @@ class Address < ApplicationRecord
                         :state,
                         :zip
 
-  validates :nickname, presence: true, uniqueness: true
+  validates :nickname, presence: true
 
 end
