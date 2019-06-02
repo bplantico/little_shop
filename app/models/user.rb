@@ -18,6 +18,10 @@ class User < ApplicationRecord
     Address.where(user_id: id)
   end
 
+  def city
+    # require "pry"; binding.pry
+  end
+
   def active_items
     items.where(active: true).order(:name)
   end
