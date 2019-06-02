@@ -92,10 +92,17 @@ RSpec.describe 'user profile', type: :feature do
 
           fill_in :user_name, with: @updated_name
           fill_in :user_email, with: @updated_email
-          fill_in :user_address, with: @updated_address
-          fill_in :user_city, with: @updated_city
-          fill_in :user_state, with: @updated_state
-          fill_in :user_zip, with: @updated_zip
+
+          fill_in :addresses_nickname, with: "home"
+          fill_in :addresses_street_address, with: "address"
+          fill_in :addresses_street_city, with: "city"
+          fill_in :addresses_street_state, with: "state"
+          fill_in :addresses_street_zip, with: "zip"
+
+          fill_in :addresses_address, with: @updated_address
+          fill_in :addresses_city, with: @updated_city
+          fill_in :addresses_state, with: @updated_state
+          fill_in :addresses_zip, with: @updated_zip
           fill_in :user_password, with: @updated_password
           fill_in :user_password_confirmation, with: @updated_password
 
