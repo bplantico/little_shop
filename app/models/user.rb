@@ -14,6 +14,10 @@ class User < ApplicationRecord
   # as a merchant
   has_many :items, foreign_key: 'merchant_id'
 
+  def addresses
+    Address.where(user_id: id)
+  end
+
   def active_items
     items.where(active: true).order(:name)
   end
@@ -95,6 +99,10 @@ class User < ApplicationRecord
          .select('users.name, sum(order_items.quantity) AS quantity')
          .order('quantity DESC')
          .limit(1).first
+  end
+
+  def test
+    require "pry"; binding.pry
   end
 
   def self.active_merchants

@@ -76,6 +76,9 @@ RSpec.describe User, type: :model do
       u5 = create(:user, state: "IA", city: "Des Moines")
       u6 = create(:user, state: "IA", city: "Des Moines")
 
+      @a1   = Address.create!(active: true, nickname: "home", street_address: "123 Home St", city: "Hometown", state: "Colorado", zip: "80216", user_id: @u1.id)
+      @a2   = Address.create!(active: false, nickname: "work", street_address: "456 Work St", city: "Worktown", state: "Colorado", zip: "80216", user_id: @u1.id)
+
       @m1 = create(:merchant)
       @i1 = create(:item, merchant_id: @m1.id, inventory: 20)
       @i2 = create(:item, merchant_id: @m1.id, inventory: 20)
@@ -111,6 +114,10 @@ RSpec.describe User, type: :model do
       @oi5.fulfill
       @oi6.fulfill
       @oi7.fulfill
+    end
+
+    it ".addresses" do
+      expect(@u1.addresses).to eq([@a1, @a2])
     end
 
     it '.active_items' do
