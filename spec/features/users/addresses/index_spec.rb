@@ -8,9 +8,6 @@ RSpec.describe 'user addresses', type: :feature do
     @a1   = Address.create!(active: true, nickname: "home", street_address: "123 Home St", city: "Hometown", state: "Colorado", zip: "80216", user_id: @user_1.id)
     @a2   = Address.create!(active: false, nickname: "work", street_address: "456 Work St", city: "Worktown", state: "Colorado", zip: "80216", user_id: @user_1.id)
     @a3   = Address.create!(active: true, nickname: "home", street_address: "2 User St", city: "Usertwotown", state: "Colorado", zip: "80216", user_id: @user_2.id)
-  end
-
-  it "clicking the 'Manage Addresses' link takes me to a page with all of my addresses" do
 
     visit login_path
     fill_in "Email", with: @user_1.email
@@ -19,6 +16,10 @@ RSpec.describe 'user addresses', type: :feature do
     visit profile_path
 
     click_link("Manage Addresses")
+
+  end
+
+  it "clicking the 'Manage Addresses' link takes me to a page with all of my addresses" do
 
     expect(current_path).to eq(profile_addresses_path)
 
@@ -42,13 +43,6 @@ RSpec.describe 'user addresses', type: :feature do
   end
 
   it "for each address, I see a link or button to edit or delete the address" do
-    visit login_path
-    fill_in "Email", with: @user_1.email
-    fill_in "Password", with: @user_1.password
-    click_button("Log in")
-    visit profile_path
-
-    click_link("Manage Addresses")
 
     within "#address-#{@a1.id}" do
       expect(page).to have_link("Edit")
