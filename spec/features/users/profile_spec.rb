@@ -19,12 +19,11 @@ RSpec.describe 'user profile', type: :feature do
       within '#profile-data' do
         expect(page).to have_content("Role: #{@user_1.role}")
         expect(page).to have_content("Email: #{@user_1.email}")
+
         within '#address-details' do
-          expect(page).to have_content("Address: #{@user_1.address}")
-          expect(page).to have_content("#{@user_1.city}, #{@user_1.state} #{@user_1.zip}")
           expect(page).to have_link("Manage Addresses")
-          expect(page).to have_link("Add New Address")
         end
+        
         expect(page).to have_link('Edit Profile Data')
       end
     end

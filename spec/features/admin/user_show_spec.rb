@@ -13,10 +13,8 @@ RSpec.describe 'Admin User Show' do
       within '#profile-data' do
         expect(page).to have_content("Role: #{user.role}")
         expect(page).to have_content("Email: #{user.email}")
-        within '#address-details' do
-          expect(page).to have_content("Address: #{user.address}")
-          expect(page).to have_content("#{user.city}, #{user.state} #{user.zip}")
-        end
+        
+        expect(page).to_not have_link('Edit Profile Data')
         expect(page).to_not have_link('Edit Profile Data')
       end
     end

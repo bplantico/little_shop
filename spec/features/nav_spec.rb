@@ -13,6 +13,7 @@ RSpec.describe 'Site Nav', type: :feature do
   end
 
   it 'should show proper links for all visitors' do
+
     visit root_path
 
     click_link 'Items'
@@ -40,14 +41,19 @@ RSpec.describe 'Site Nav', type: :feature do
 
     visit profile_path
     expect(page.status_code).to eq(404)
+
     visit dashboard_path
     expect(page.status_code).to eq(404)
+
     visit admin_dashboard_path
     expect(page.status_code).to eq(404)
+
     visit admin_users_path
     expect(page.status_code).to eq(404)
+
     visit admin_user_path(@user)
     expect(page.status_code).to eq(404)
+
     visit admin_merchant_path(@merchant)
     expect(page.status_code).to eq(404)
   end

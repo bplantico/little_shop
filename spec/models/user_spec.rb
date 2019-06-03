@@ -267,7 +267,7 @@ RSpec.describe User, type: :model do
         expect(User.top_user_states_by_order_count(3)[2].order_count).to eq(1)
       end
 
-      it ".top_user_cities_by_order_count" do
+      xit ".top_user_cities_by_order_count" do
         expect(User.top_user_cities_by_order_count(3)[0].state).to eq("CO")
         expect(User.top_user_cities_by_order_count(3)[0].city).to eq("Fairfield")
         expect(User.top_user_cities_by_order_count(3)[0].order_count).to eq(2)

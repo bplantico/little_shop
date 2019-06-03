@@ -28,9 +28,9 @@ class ApplicationController < ActionController::Base
     render file: 'public/404', status: 404 unless current_user.nil? || current_reguser?
   end
 
-  # def user_or_admin
-  #   render file: 'public/404', status: 404 unless current_user && (current_reguser? || current_admin?)
-  # end
+  def user_or_admin
+    render file: 'public/404', status: 404 unless current_user && (current_reguser? || current_admin?)
+  end
 
   def require_reguser
     render file: 'public/404', status: 404 unless current_reguser?
