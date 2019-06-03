@@ -1,2 +1,35 @@
 <!-- app/views/profile/addresses/edit.html.erb -->
 <!-- profile::address controller routes here for edit action -->
+
+<%= form_for @address, url: profile_address_path(@address.id), method: :patch do |f| %>
+
+  <p>
+    <%= f.label :nickname %>
+    <%= f.text_field :nickname, required: true %>
+  </p>
+
+  <p>
+    <%= f.label :street_address %>
+    <%= f.text_field :street_address, required: true %>
+  </p>
+
+  <p>
+    <%= f.label :city %>
+    <%= f.text_field :city, required: true %>
+  </p>
+
+  <p>
+    <%= f.label :state %>
+    <%= f.text_field :state, required: true %>
+  </p>
+
+  <p>
+    <%= f.label :zip %>
+    <%= f.text_field :zip, required: true %>
+  </p>
+
+  <p>
+    <%= f.submit "Update Address" %>
+  </p>
+
+  <% end %>

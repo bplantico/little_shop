@@ -23,6 +23,8 @@ RSpec.describe 'user addresses', type: :feature do
 
     expect(current_path).to eq(profile_addresses_path)
 
+    expect(page).to have_link("Add New Address")
+
     within "#address-#{@a1.id}" do
       expect(page).to have_content("#{@a1.nickname}")
       expect(page).to have_content("#{@a1.street_address}")
@@ -66,9 +68,34 @@ RSpec.describe 'user addresses', type: :feature do
     end
 
     expect(current_path).to eq(edit_profile_address_path(@a1.id))
+
+    expect(page).to have_css("input[value='home']")
+    expect(page).to have_css("input[value='123 Home St']")
+    expect(page).to have_css("input[value='Hometown']")
+    expect(page).to have_css("input[value='Colorado']")
+    expect(page).to have_css("input[value='80216']")
+
+    fill_in :address_nickname, with: "updated nickname"
+    fill_in :address_street_address, with: "updated street"
+    fill_in :address_city, with: "updated city"
+    fill_in :address_state, with: "updated state"
+    fill_in :address_zip, with: "updated zip"
+
+    click_button "Update Address"
+
+    expect(current_path).to eq(profile_addresses_path)
+
+    within "#address-#{@a1.id}" do
+      expect(page).to have_content("updated nickname")
+      expect(page).to have_content("updated street")
+      expect(page).to have_content("updated city")
+      expect(page).to have_content("updated state")
+      expect(page).to have_content("updated zip")
+    end
+
   end
 
-  it "clicking a link to edit address takes me to a form where I can edit that address" do
+  it "clicking link to delete address removes the address from my profile" do
 
     click_link("Manage Addresses")
 
@@ -77,9 +104,15 @@ RSpec.describe 'user addresses', type: :feature do
     end
 
     expect(current_path).to eq(profile_addresses_path)
+
+    expect(page).to_not have_content("#{@a1.nickname}")
+    expect(page).to_not have_content("#{@a1.street_address}")
+
   end
 
   it "clicking the 'Add New Address' link takes me to a form where I can add a new address" do
+
+    visit profile_addresses_path
 
     click_link("Add New Address")
 
@@ -101,7 +134,7 @@ RSpec.describe 'user addresses', type: :feature do
     expect(new_address.city).to eq("city 2")
     expect(new_address.state).to eq("state 2")
     expect(new_address.zip).to eq("zip 2")
-  
+
   end
 
   it "address cannot be deleted if an order was shipped to it"

@@ -1,19 +1,21 @@
 <h1>Profile Page for <%= @user.name %></h1>
 
 <section id="profile-data">
-  <h2>Order Data</h2>
+  <h2>Account Data</h2>
   <p>Email: <%= @user.email %></p>
   <p>Role: <%= @user.role %></p>
   <aside id="address-details">
-    <h3>Address:</h3>
+
+
     <p><%= @user.address %></p>
     <p>
       <%= @user.city %>
       <%= @user.state %>
       <%= @user.zip %>
-      <%= link_to "Manage Addresses", profile_addresses_path %>
-      <%= link_to "Add New Address", new_profile_address_path %>
     </p>
+
+      <p><%= link_to "Manage Addresses", profile_addresses_path %></p>
+
   </aside>
   <p><%= link_to 'Edit Profile Data', edit_profile_path unless current_admin? %></p>
 </section>

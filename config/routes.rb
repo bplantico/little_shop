@@ -25,7 +25,7 @@ Rails.application.routes.draw do
   patch '/profile/edit', to: 'users#update'
   namespace :profile do
     resources :orders, only: [:index, :show, :destroy, :create]
-    resources :addresses, only: [:index, :edit, :destroy, :create, :new]
+    resources :addresses, only: [:index, :edit, :destroy, :create, :new, :update]
   end
 
   namespace :dashboard do
