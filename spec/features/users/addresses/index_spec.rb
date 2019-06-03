@@ -55,6 +55,18 @@ RSpec.describe 'user addresses', type: :feature do
     end
   end
 
+  it "clicking a link or button to edit an address takes me to an edit form" do
+
+    within "#address-#{@a1.id}" do
+      click_link("Edit")
+    end
+
+    expect(current_path).to eq(edit_profile_address_path(@a1.id))
+
+  end
+
+
+
   it "clicking the 'Add New Address' link takes me to a form to add a new address"
 
 
