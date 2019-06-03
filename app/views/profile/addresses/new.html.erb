@@ -1,2 +1,35 @@
 <!-- app/views/profile/addresses/new.html.erb -->
 <!-- This is a form page for a user to add a new address -->
+
+<%= form_for @address, url: profile_addresses_path do |f| %>
+
+  <%= f.hidden_field :active, :value => true %>
+
+  <p>
+    <%= f.label :street_address, "Street Address" %>
+    <%= f.text_field :street_address, required: true %>
+  </p>
+
+  <p>
+    <%= f.label :city %>
+    <%= f.text_field :city, required: true %>
+  </p>
+
+  <p>
+    <%= f.label :state %>
+    <%= f.text_field :state, required: true %>
+  </p>
+
+  <p>
+    <%= f.label :zip %>
+    <%= f.text_field :zip, required: true %>
+  </p>
+
+  <p>
+    <%= f.label :nickname %>
+    <%= f.text_field :nickname, required: true %>
+  </p>
+
+  <%= f.submit "Add Address" %>
+
+<% end %>

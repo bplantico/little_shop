@@ -68,7 +68,7 @@ RSpec.describe 'user addresses', type: :feature do
     expect(current_path).to eq(edit_profile_address_path(@a1.id))
   end
 
-  it "clicking a link or button to edit an address takes me to an edit form" do
+  it "clicking a link to edit address takes me to a form where I can edit that address" do
 
     click_link("Manage Addresses")
 
@@ -79,15 +79,32 @@ RSpec.describe 'user addresses', type: :feature do
     expect(current_path).to eq(profile_addresses_path)
   end
 
-  it "clicking the 'Add New Address' link takes me to a form to add a new address" do
+  it "clicking the 'Add New Address' link takes me to a form where I can add a new address" do
 
     click_link("Add New Address")
 
     expect(current_path).to eq(new_profile_address_path)
+
+    fill_in :address_nickname, with: "second address nickname"
+    fill_in :address_street_address, with: "street 2"
+    fill_in :address_city, with: "city 2"
+    fill_in :address_state, with: "state 2"
+    fill_in :address_zip, with: "zip 2"
+
+    click_button "Add Address"
+
+    expect(current_path).to eq(profile_addresses_path)
+
+    new_address = Address.last
+    expect(new_address.nickname).to eq("second address nickname")
+    expect(new_address.street_address).to eq("street 2")
+    expect(new_address.city).to eq("city 2")
+    expect(new_address.state).to eq("state 2")
+    expect(new_address.zip).to eq("zip 2")
+  
   end
 
   it "address cannot be deleted if an order was shipped to it"
   it "what to do if address is tied to a pending order"
-
 
 end

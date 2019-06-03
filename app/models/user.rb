@@ -105,10 +105,6 @@ class User < ApplicationRecord
          .limit(1).first
   end
 
-  def test
-    require "pry"; binding.pry
-  end
-
   def self.active_merchants
     where(role: :merchant, active: true)
   end
