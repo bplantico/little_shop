@@ -1,7 +1,6 @@
 class Profile::AddressesController < ApplicationController
 
   def new
-
   end
 
   def index
