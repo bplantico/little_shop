@@ -113,7 +113,7 @@ RSpec.describe User, type: :model do
     end
 
     it ".addresses" do
-      expect(@u1.addresses).to eq([@a1, @a2])
+      expect(@u1.addresses.count).to eq(3)
     end
 
     it '.active_items' do
