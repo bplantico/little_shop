@@ -28,63 +28,6 @@ RSpec.describe 'user profile', type: :feature do
         expect(page).to have_link('Edit Profile Data')
       end
     end
-
-    it "clicking the 'Manage Addresses' link takes me to a page with all of my addresses" do
-
-      visit login_path
-  	  fill_in "Email", with: @user_1.email
-  	  fill_in "Password", with: @user_1.password
-  	  click_button("Log in")
-      visit profile_path
-
-      click_link("Manage Addresses")
-
-      expect(current_path).to eq(profile_addresses_path)
-
-      within "#address-#{@a1.id}" do
-        expect(page).to have_content("#{@a1.nickname}")
-        expect(page).to have_content("#{@a1.street_address}")
-        expect(page).to have_content("#{@a1.city}")
-        expect(page).to have_content("#{@a1.state}")
-        expect(page).to have_content("#{@a1.zip}")
-      end
-
-      within "#address-#{@a2.id}" do
-        expect(page).to have_content("#{@a2.nickname}")
-        expect(page).to have_content("#{@a2.street_address}")
-        expect(page).to have_content("#{@a2.city}")
-        expect(page).to have_content("#{@a2.state}")
-        expect(page).to have_content("#{@a2.zip}")
-      end
-
-      expect(page).to_not have_content("#{@a3.street_address}")
-    end
-
-    it "for each address, I see a link or button to edit or delete the address" do
-      visit login_path
-  	  fill_in "Email", with: @user_1.email
-  	  fill_in "Password", with: @user_1.password
-  	  click_button("Log in")
-      visit profile_path
-
-      click_link("Manage Addresses")
-
-      within "#address-#{@a1.id}" do
-        expect(page).to have_link("Edit")
-        expect(page).to have_link("Delete")
-      end
-
-      within "#address-#{@a2.id}" do
-        expect(page).to have_link("Edit")
-        expect(page).to have_link("Delete")
-      end
-
-
-    end
-
-    it "clicking the 'Add New Address' link takes me to a form to add a new address"
-
-
   end
 
   describe 'registered user edits their profile' do
