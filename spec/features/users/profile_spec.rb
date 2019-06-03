@@ -60,14 +60,37 @@ RSpec.describe 'user profile', type: :feature do
       expect(page).to_not have_content("#{@a3.street_address}")
     end
 
+    it "for each address, I see a link or button to edit or delete the address" do
+      visit login_path
+  	  fill_in "Email", with: @user_1.email
+  	  fill_in "Password", with: @user_1.password
+  	  click_button("Log in")
+      visit profile_path
+
+      click_link("Manage Addresses")
+
+      within "#address-#{@a1.id}" do
+        expect(page).to have_link("Edit")
+        expect(page).to have_link("Delete")
+      end
+
+      within "#address-#{@a2.id}" do
+        expect(page).to have_link("Edit")
+        expect(page).to have_link("Delete")
+      end
+
+
+    end
+
     it "clicking the 'Add New Address' link takes me to a form to add a new address"
+
 
   end
 
   describe 'registered user edits their profile' do
     describe 'edit user form' do
       it 'pre-fills form with all but password information' do
-        allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@user)
+        allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@user_1)
 
         visit profile_path
 
@@ -95,19 +118,13 @@ RSpec.describe 'user profile', type: :feature do
 
       describe 'succeeds with allowable updates' do
         scenario 'all attributes are updated' do
-          login_as(@user)
+          login_as(@user_1)
           old_digest = @user_1.password_digest
 
           visit edit_profile_path
 
           fill_in :user_name, with: @updated_name
           fill_in :user_email, with: @updated_email
-
-          # fill_in :addresses_nickname, with: "home"
-          # fill_in :addresses_street_address, with: @updated_address
-          # fill_in :addresses_city, with: @updated_city
-          # fill_in :addresses_state, with: @updated_state
-          # fill_in :addresses_zip, with: @updated_zip
 
           fill_in :user_password, with: @updated_password
           fill_in :user_password_confirmation, with: @updated_password
@@ -126,8 +143,8 @@ RSpec.describe 'user profile', type: :feature do
         end
 
         scenario 'works if no password is given' do
-          login_as(@user)
-          old_digest = @user.password_digest
+          login_as(@user_1)
+          old_digest = @user_1.password_digest
 
           visit edit_profile_path
 
@@ -136,7 +153,7 @@ RSpec.describe 'user profile', type: :feature do
 
           click_button 'Submit'
 
-          updated_user = User.find(@user.id)
+          updated_user = User.find(@user_1.id)
 
           expect(current_path).to eq(profile_path)
           expect(page).to have_content("Your profile has been updated")
@@ -152,7 +169,7 @@ RSpec.describe 'user profile', type: :feature do
 
     it 'fails with non-unique email address change' do
       create(:user, email: 'megan@example.com')
-      login_as(@user)
+      login_as(@user_1)
 
       visit edit_profile_path
 
