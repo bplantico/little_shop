@@ -15,11 +15,11 @@ RSpec.describe 'user addresses', type: :feature do
     click_button("Log in")
     visit profile_path
 
-    click_link("Manage Addresses")
-
   end
 
   it "clicking the 'Manage Addresses' link takes me to a page with all of my addresses" do
+
+    click_link("Manage Addresses")
 
     expect(current_path).to eq(profile_addresses_path)
 
@@ -44,6 +44,8 @@ RSpec.describe 'user addresses', type: :feature do
 
   it "for each address, I see a link or button to edit or delete the address" do
 
+    click_link("Manage Addresses")
+
     within "#address-#{@a1.id}" do
       expect(page).to have_link("Edit")
       expect(page).to have_link("Delete")
@@ -57,6 +59,8 @@ RSpec.describe 'user addresses', type: :feature do
 
   it "clicking a link or button to edit an address takes me to an edit form" do
 
+    click_link("Manage Addresses")
+
     within "#address-#{@a1.id}" do
       click_link("Edit")
     end
@@ -66,6 +70,8 @@ RSpec.describe 'user addresses', type: :feature do
 
   it "clicking a link or button to edit an address takes me to an edit form" do
 
+    click_link("Manage Addresses")
+
     within "#address-#{@a1.id}" do
       click_link("Delete")
     end
@@ -73,7 +79,13 @@ RSpec.describe 'user addresses', type: :feature do
     expect(current_path).to eq(profile_addresses_path)
   end
 
-  it "clicking the 'Add New Address' link takes me to a form to add a new address"
+  it "clicking the 'Add New Address' link takes me to a form to add a new address" do
+
+    click_link("Add New Address")
+
+    expect(current_path).to eq(new_profile_address_path)
+  end
+
   it "address cannot be deleted if an order was shipped to it"
   it "what to do if address is tied to a pending order"
 

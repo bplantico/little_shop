@@ -12,7 +12,7 @@
       <%= @user.state %>
       <%= @user.zip %>
       <%= link_to "Manage Addresses", profile_addresses_path %>
-      <%= link_to "Add New Address" %>
+      <%= link_to "Add New Address", new_profile_address_path %>
     </p>
   </aside>
   <p><%= link_to 'Edit Profile Data', edit_profile_path unless current_admin? %></p>

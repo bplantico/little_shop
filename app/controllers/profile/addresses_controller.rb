@@ -1,5 +1,9 @@
 class Profile::AddressesController < ApplicationController
 
+  def new
+
+  end
+
   def index
     @user = current_user
     @addresses = current_user.addresses
