@@ -73,9 +73,9 @@ RSpec.describe 'user addresses', type: :feature do
     expect(current_path).to eq(profile_addresses_path)
   end
 
-
-
   it "clicking the 'Add New Address' link takes me to a form to add a new address"
+  it "address cannot be deleted if an order was shipped to it"
+  it "what to do if address is tied to a pending order"
 
 
 end
