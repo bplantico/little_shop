@@ -22,15 +22,28 @@ RSpec.describe "Checking out" do
 
   context "as a logged in regular user" do
     before :each do
-      user = create(:user)
-      login_as(user)
+      @user = create(:user)
+      login_as(@user)
       visit cart_path
+    end
 
-      click_button "Check Out"
-      @new_order = Order.last
+    it "should let me pick which address to ship an order to" do
+
+      Address.where(user_id: @user.id)&.destroy_all
+      @a1   = Address.create!(active: true, nickname: "home", street_address: "123 Home St", city: "Hometown", state: "Colorado", zip: "80216", user_id: @user.id)
+      @a2   = Address.create!(active: true, nickname: "work", street_address: "456 Work St", city: "Worktown", state: "Colorado", zip: "80216", user_id: @user.id)
+
+      expect(page).to have_content("Ship this order to:")
+
+      expect(page).to have_select("address_id", @a1.street_address)
+
     end
 
     it "should create a new order" do
+
+      click_button "Check Out"
+      @new_order = Order.last
+
       expect(current_path).to eq(profile_orders_path)
       expect(page).to have_content("Your order has been created!")
       expect(page).to have_content("Cart: 0")
@@ -41,6 +54,10 @@ RSpec.describe "Checking out" do
     end
 
     it "should create order items" do
+
+      click_button "Check Out"
+      @new_order = Order.last
+
       visit profile_order_path(@new_order)
 
       within("#oitem-#{@new_order.order_items.first.id}") do

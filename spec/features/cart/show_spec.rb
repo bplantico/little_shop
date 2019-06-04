@@ -34,7 +34,7 @@ RSpec.describe "Cart show page" do
 
       expect(page).to have_button("Empty Cart")
 
-      within("#item-#{@item_1.id}") do
+      within("#items") do
         expect(page).to have_content(@item_1.name)
         expect(page).to have_xpath("//img[@src='#{@item_1.image}']")
         expect(page).to have_content(@item_1.user.name)

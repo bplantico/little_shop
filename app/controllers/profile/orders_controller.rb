@@ -8,6 +8,8 @@ class Profile::OrdersController < ApplicationController
 
   def show
     @order = Order.find(params[:id])
+    @address = Address.find(@order.address_id)
+    # require "pry"; binding.pry
   end
 
   def destroy
@@ -31,12 +33,26 @@ class Profile::OrdersController < ApplicationController
   end
 
   def create
-    order = Order.create(user: current_user, status: :pending)
+    order = Order.create(user: current_user, status: :pending, address_id: params[:format])
     cart.items.each do |item, quantity|
       order.order_items.create(item: item, quantity: quantity, price: item.price)
     end
     session.delete(:cart)
     flash[:success] = "Your order has been created!"
     redirect_to profile_orders_path
+  end
+
+  def update
+    @order = Order.find(params[:id])
+
+    if @order.update(address_id: params[:format])
+      flash[:success] = "Your Item has been updated!"
+      redirect_to profile_order_path(@order)
+    else
+      flash[:danger] = @order.errors.full_messages
+      @order = Order.find(params[:id])
+      render profile_order_path(@order)
+    end
+
   end
 end

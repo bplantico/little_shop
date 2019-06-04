@@ -3,26 +3,34 @@
   <p>Your Cart is empty.</p>
 <% else %>
   <h3>Total: <%= number_to_currency(cart.total) %></h3>
-  <% if current_user %>
-    <%= button_to "Check Out", profile_orders_path, method: :post %>
+
+  <% if current_user && current_user.addresses.any? %>
+    <% current_user.addresses.each do |address| %>
+      <%= button_to "Check Out -- Ship to #{address.street_address} #{address.city} #{address.state} #{address.zip}", profile_orders_path(address.id), method: :post, data: {confirm: "Are you sure you want to ship this order to the selected address?"} %>
+    <% end %>
+  <% elsif current_user && current_user.addresses.none? %>
+     <p>You must <%= link_to "add an address", new_profile_address_path %> to check out.</p>
   <% else %>
     <p>You must <%= link_to "register", registration_path %>
       or <%= link_to "log in", login_path %> to check out.</p>
   <% end %>
+
   <%= button_to "Empty Cart", empty_cart_path, method: :delete %>
-  <ul id="items">
+
+  <ul class="order-list" id="items">
     <% cart.items.each do |item, quantity| %>
-      <li id="item-<%= item.id %>">
-        <%= item.name %>
-        <%= image_tag item.image %>
-        Sold By: <%= item.user.name %>
-        <%=  number_to_currency(item.price) %>
-        quantity: <%= quantity %>
-        subtotal: <%= number_to_currency(cart.subtotal(item)) %>
+      <li class="order-item" id="item-<%= item.id %>">
+        <span><%= item.name %></span>
+        <%= image_tag( item.image, :class => "order-item-thumbnail") %>
+        <span>Sold By: <%= item.user.name %></span>
+        <span><%=  number_to_currency(item.price) %></span>
+        <span>quantity: <%= quantity %></span>
+        <span>subtotal: <%= number_to_currency(cart.subtotal(item)) %></span>
         <%= button_to "delete", remove_item_path(item), method: :delete %>
         <%= button_to "+", cart_item_path(item), method: :post %>
         <%= button_to "-", cart_item_path(item), method: :patch %>
       </li>
     <% end %>
   </ul>
+
 <% end %>

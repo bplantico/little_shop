@@ -14,6 +14,17 @@
  *= require_self
  */
 
+ .order-item {
+   display: flex;
+   flex-direction: column;
+ }
+
+ .order-item-thumbnail {
+   height: 400px;
+   width: 400px;
+   
+ }
+
 * {
   font-family: verdana, arial, helvetica, sans-serif;
 }

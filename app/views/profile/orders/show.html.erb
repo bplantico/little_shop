@@ -4,10 +4,18 @@
   <p>Last Update: <%= @order.updated_at %></p>
   <p>Status: <%= @order.status %></p>
   <p>Item Count: <%= @order.total_item_count %></p>
-  <p>Total Cost: <%= number_to_currency(@order.total_cost) %></p>
+  <p>Total Cost: <%= number_to_currency(@order.total_cost) %></p><br>
+  <p>Shipping Address:</p>
+    <p><%= @address.street_address %></p>
+    <p><%= @address.city %></p>
+    <p><%= @address.state %></p>
+    <p><%= @address.zip %></p>
 
   <% if @order.status == 'pending' || @order.status == 'packaged' %>
-  <p><%= button_to 'Cancel Order', profile_order_path(@order), method: :delete %></p>
+    <% current_user.addresses.each do |address| %>
+      <%= button_to "Change Shipping Address To #{address.street_address} #{address.city} #{address.state} #{address.zip}", profile_order_path(@order, address.id), method: :patch, data: {confirm: "Are you sure you want to ship this order to the selected address?"} %>
+    <% end %>
+    <p><%= button_to 'Cancel Order', profile_order_path(@order), method: :delete %></p>
   <% end %>
 
   <% @order.order_items.each do |oitem| %>
