@@ -30,13 +30,13 @@ RSpec.describe "Checking out" do
     it "should let me pick which address to ship an order to" do
 
       Address.where(user_id: @user.id)&.destroy_all
-      @a1   = Address.create!(active: true, nickname: "home", street_address: "123 Home St", city: "Hometown", state: "Colorado", zip: "80216", user_id: @user.id)
-      @a2   = Address.create!(active: true, nickname: "work", street_address: "456 Work St", city: "Worktown", state: "Colorado", zip: "80216", user_id: @user.id)
+      @a1 = Address.create!(active: true, nickname: "home", street_address: "123 Home St", city: "Hometown", state: "Colorado", zip: "80216", user_id: @user.id)
+      @a2 = Address.create!(active: true, nickname: "work", street_address: "456 Work St", city: "Worktown", state: "Colorado", zip: "80216", user_id: @user.id)
 
-      expect(page).to have_content("Ship this order to:")
+      visit cart_path
 
-      expect(page).to have_select("address_id", @a1.street_address)
-
+      expect(page).to have_button("Check Out -- Ship to #{@a1.street_address} #{@a1.city} #{@a1.state} #{@a1.zip}")
+      expect(page).to have_button("Check Out -- Ship to #{@a2.street_address} #{@a2.city} #{@a2.state} #{@a2.zip}")
     end
 
     it "should create a new order" do

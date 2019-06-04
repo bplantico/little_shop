@@ -9,6 +9,9 @@ RSpec.describe 'user addresses', type: :feature do
     @a2   = Address.create!(active: false, nickname: "work", street_address: "456 Work St", city: "Worktown", state: "Colorado", zip: "80216", user_id: @user_1.id)
     @a3   = Address.create!(active: true, nickname: "home", street_address: "2 User St", city: "Usertwotown", state: "Colorado", zip: "80216", user_id: @user_2.id)
 
+    @o1 = Order.create(user: @user_1, status: :pending, address_id: @a1.id)
+    @o2 = Order.create(user: @user_1, status: :shipped, address_id: @a2.id)
+
     visit login_path
     fill_in "Email", with: @user_1.email
     fill_in "Password", with: @user_1.password
@@ -54,15 +57,15 @@ RSpec.describe 'user addresses', type: :feature do
     end
 
     within "#address-#{@a2.id}" do
-      expect(page).to have_link("Edit")
-      expect(page).to have_link("Delete")
+      expect(page).to_not have_link("Edit")
+      expect(page).to_not have_link("Delete")
     end
   end
 
   it "clicking a link or button to edit an address takes me to an edit form" do
 
     click_link("Manage Addresses")
-
+    
     within "#address-#{@a1.id}" do
       click_link("Edit")
     end

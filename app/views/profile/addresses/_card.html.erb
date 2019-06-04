@@ -10,7 +10,13 @@
     <p><%= address.city %></p>
     <p><%= address.state %></p>
     <p><%= address.zip %></p>
-    <p><%= link_to "Edit", edit_profile_address_path(address.id)%></p>
-    <p><%= link_to "Delete", profile_address_path(address), method: :delete, data: {confirm: "Are you sure you want to delete this address?"} %></p>
+
+
+
+    <% if address.shipped_to? == false %>
+      <p><%= link_to "Edit", edit_profile_address_path(address.id)%></p>
+      <p><%= link_to "Delete", profile_address_path(address), method: :delete, data: {confirm: "WARNING: Deleting this address will cancel all orders associated with it. \n Are you sure you want to delete this address?"} %></p>
+    <% end %>
+
   <% end %>
 <% end %>

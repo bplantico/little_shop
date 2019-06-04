@@ -58,7 +58,7 @@ RSpec.describe 'Site Nav', type: :feature do
     expect(page.status_code).to eq(404)
   end
 
-  it 'should show proper links for all users logged in' do
+  xit 'should show proper links for all users logged in' do
     allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@user)
 
     visit root_path

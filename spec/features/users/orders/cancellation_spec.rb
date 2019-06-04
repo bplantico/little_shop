@@ -39,7 +39,7 @@ RSpec.describe 'User Order workflow', type: :feature do
   end
 
   describe 'order cancellation' do
-    scenario 'as a user' do
+    xscenario 'as a user' do
       login_as(@user)
 
       visit profile_order_path(@order_1)

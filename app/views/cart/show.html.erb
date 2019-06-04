@@ -3,7 +3,6 @@
   <p>Your Cart is empty.</p>
 <% else %>
   <h3>Total: <%= number_to_currency(cart.total) %></h3>
-
   <% if current_user && current_user.addresses.any? %>
     <% current_user.addresses.each do |address| %>
       <%= button_to "Check Out -- Ship to #{address.street_address} #{address.city} #{address.state} #{address.zip}", profile_orders_path(address.id), method: :post, data: {confirm: "Are you sure you want to ship this order to the selected address?"} %>
