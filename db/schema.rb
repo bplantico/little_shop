@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190603221630) do
+ActiveRecord::Schema.define(version: 20190604215027) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -26,6 +26,16 @@ ActiveRecord::Schema.define(version: 20190603221630) do
     t.datetime "updated_at", null: false
     t.bigint "user_id"
     t.index ["user_id"], name: "index_addresses_on_user_id"
+  end
+
+  create_table "coupons", force: :cascade do |t|
+    t.string "code"
+    t.boolean "active", default: true
+    t.decimal "discount_amount"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "merchant_id"
+    t.index ["merchant_id"], name: "index_coupons_on_merchant_id"
   end
 
   create_table "items", force: :cascade do |t|
@@ -81,6 +91,7 @@ ActiveRecord::Schema.define(version: 20190603221630) do
   end
 
   add_foreign_key "addresses", "users"
+  add_foreign_key "coupons", "users", column: "merchant_id"
   add_foreign_key "items", "users", column: "merchant_id"
   add_foreign_key "order_items", "items"
   add_foreign_key "order_items", "orders"
