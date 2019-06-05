@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe "Merchant editing an item" do
+RSpec.describe "Merchant editing a coupon" do
   before :each do
     @merchant = create(:merchant)
     @coupon = Coupon.create(code: "ONE", active: true, discount_amount: 1, merchant_id: @merchant.id)
@@ -49,17 +49,14 @@ RSpec.describe "Merchant editing an item" do
       click_button "Update Coupon"
 
       expect(page).to have_content("Code can't be blank")
-      expect(page).to have_content("Description can't be blank")
-      expect(page).to have_content("Price can't be blank")
-      expect(page).to have_content("Inventory can't be blank")
+      expect(page).to have_content("Discount amount can't be blank")
     end
 
     it "cannot enter discount amount less than 0" do
-      fill_in :item_price, with: "-1"
+      fill_in :coupon_discount_amount, with: "-1"
       click_button "Update Coupon"
 
-      expect(page).to have_content("Disco
-        unt amount must be greater than or equal to 0")
+      expect(page).to have_content("Discount amount must be greater than or equal to 0")
     end
   end
 end
