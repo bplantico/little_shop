@@ -9,7 +9,7 @@ RSpec.describe 'Merchant Dashboard Coupons page' do
       visit dashboard_coupons_path
       click_link "Create A Coupon"
 
-      @new_code = "newcouponcode"
+      @new_code = "NEWCOUP"
       @new_discount_amount = 1
 
       expect(current_path).to eq(new_dashboard_coupon_path)

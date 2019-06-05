@@ -9,7 +9,6 @@ class Profile::OrdersController < ApplicationController
   def show
     @order = Order.find(params[:id])
     @address = Address.find(@order.address_id)
-    # require "pry"; binding.pry
   end
 
   def destroy

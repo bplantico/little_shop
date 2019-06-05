@@ -15,10 +15,17 @@
       <p><%= button_to 'Activate Coupon' %></p>
     <% end %>
     <p>Created: <%= coupon.created_at.to_formatted_s(:long_ordinal) %></p>
+    <p><%= link_to "Edit", edit_dashboard_coupon_path(coupon) %></p>
+
+    <p>
+      <!-- unless coupon.used? -->
+        <%= button_to "Delete Coupon", dashboard_coupon_path(coupon), method: :delete, data: {confirm: "Are you sure you want to delete this coupon?"} %>
+      <!-- end -->
+    </p>
+
   <% end %>
 <% end %>
 
 <!-- if address.shipped_to? == false
-  <p>= link_to "Edit", edit_profile_address_path(address.id)</p>
   <p>= link_to "Delete", profile_address_path(address), method: :delete, data: {confirm: "WARNING: Deleting this address will cancel all orders associated with it. \n Are you sure you want to delete this address?"} </p>
   end  -->
