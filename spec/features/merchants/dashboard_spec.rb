@@ -60,6 +60,17 @@ RSpec.describe 'merchant dashboard' do
       expect(page).to have_link('Manage Coupons')
     end
 
+    it 'clicking link to manage coups takes me to a page that shows all of my coups' do
+      click_link('Manage Coupons')
+
+      expect(current_path).to eq(dashboard_coupons_path)
+
+      expect(page).to have_content("Coupons")
+      expect(page).to have_link("Create A Coupon")
+    end
+
+
+
     it 'shows pending order information' do
       within("#order-#{@o1.id}") do
         expect(page).to have_link(@o1.id)
