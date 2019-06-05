@@ -48,7 +48,7 @@ class Dashboard::CouponsController < Dashboard::BaseController
     # else
     #   render file: 'public/404', status: 404
     # end
-    # require "pry"; binding.pry
+
   end
 
   private

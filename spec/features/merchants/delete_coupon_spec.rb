@@ -26,19 +26,19 @@ RSpec.describe 'Merchant Dashboard Coupons page' do
       end
     end
 
-    describe 'fails if someone has used that coupon before' do
-      xscenario 'when logged in as merchant' do
-        login_as(@merchant)
-        visit dashboard_coupons_path
-
-        page.driver.delete(dashboard_item_path(@coupon_1))
-        expect(page.status_code).to eq(302)
-
-        visit dashboard_coupons_path
-
-        expect(page).to have_css("#coupon-#{@coupon_1.id}")
-        expect(page).to have_content("Attempt to delete #{@coupon_1.code} was thwarted!")
-      end
-    end
+    # describe 'fails if someone has used that coupon before' do
+    #   scenario 'when logged in as merchant' do
+    #     login_as(@merchant)
+    #     visit dashboard_coupons_path
+    #
+    #     page.driver.delete(dashboard_item_path(@coupon_1))
+    #     expect(page.status_code).to eq(302)
+    #
+    #     visit dashboard_coupons_path
+    #
+    #     expect(page).to have_css("#coupon-#{@coupon_1.id}")
+    #     expect(page).to have_content("Attempt to delete #{@coupon_1.code} was thwarted!")
+    #   end
+    # end
   end
 end
