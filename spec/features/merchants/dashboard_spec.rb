@@ -56,6 +56,10 @@ RSpec.describe 'merchant dashboard' do
       expect(page).to_not have_link('Edit')
     end
 
+    it 'has a link to manage coupons' do
+      expect(page).to have_link('Manage Coupons')
+    end
+
     it 'shows pending order information' do
       within("#order-#{@o1.id}") do
         expect(page).to have_link(@o1.id)
