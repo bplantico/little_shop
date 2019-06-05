@@ -20,6 +20,23 @@ class Dashboard::CouponsController < Dashboard::BaseController
     end
   end
 
+  def edit
+    @coupon = Coupon.find(params[:id])
+  end
+
+  def update
+    @coupon = Coupon.find(params[:id])
+    if @coupon.update(coupon_params)
+      # require "pry"; binding.pry
+      flash[:success] = "Your coupon has been updated!"
+      redirect_to dashboard_coupons_path
+    else
+      flash[:danger] = @coupon.errors.full_messages
+      @coupon = Coupon.find(params[:id])
+      render :edit
+    end
+  end
+
   private
 
   def coupon_params

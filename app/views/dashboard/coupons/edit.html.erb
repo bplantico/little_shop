@@ -1,0 +1,15 @@
+<!-- app/views/dashboard/coupons/edit.html.erb -->
+
+<%= form_for @coupon, url: dashboard_coupon_path(@coupon) do |f| %>
+  <p>
+    <%= f.label :code %>
+    <%= f.text_field :code %>
+  </p>
+
+  <p>
+    <%= f.label :discount_amount %>
+    <%= f.text_field :discount_amount %>
+  </p>
+
+  <%= f.submit "Update Coupon" %>
+<% end %>
