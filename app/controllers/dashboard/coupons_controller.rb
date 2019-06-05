@@ -27,7 +27,6 @@ class Dashboard::CouponsController < Dashboard::BaseController
   def update
     @coupon = Coupon.find(params[:id])
     if @coupon.update(coupon_params)
-      # require "pry"; binding.pry
       flash[:success] = "Your coupon has been updated!"
       redirect_to dashboard_coupons_path
     else
@@ -35,6 +34,21 @@ class Dashboard::CouponsController < Dashboard::BaseController
       @coupon = Coupon.find(params[:id])
       render :edit
     end
+  end
+
+  def destroy
+    @coupon = Coupon.find(params[:id])
+    # if @coupon && @coupon.user == current_user
+    #   if @coupon && @coupon.used?
+    #     flash[:error] = "Attempt to delete #{@coupon.code} was thwarted!"
+    #   else
+        @coupon.destroy
+    #   end
+      redirect_to dashboard_coupons_path
+    # else
+    #   render file: 'public/404', status: 404
+    # end
+    # require "pry"; binding.pry
   end
 
   private
