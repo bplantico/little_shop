@@ -1,0 +1,24 @@
+<%= tag.div class: "card float-left m-3 address-card" do %>
+
+  <%= tag.section class: "card-body" do %>
+    <%= tag.h5 class: "card-title" do %>
+      Coupon Code: <%= coupon.code %>
+    <% end %>
+
+    <p>Discount Amount: <%= number_to_currency(coupon.discount_amount) %></p>
+
+    <% if coupon.active == true %>
+      <p>Status: Active</p>
+      <p><%= button_to 'Deactivate Coupon' %></p>
+    <% else %>
+      <p>Status: Inactive</p>
+      <p><%= button_to 'Activate Coupon' %></p>
+    <% end %>
+    <p>Created: <%= coupon.created_at.to_formatted_s(:long_ordinal) %></p>
+  <% end %>
+<% end %>
+
+<!-- if address.shipped_to? == false
+  <p>= link_to "Edit", edit_profile_address_path(address.id)</p>
+  <p>= link_to "Delete", profile_address_path(address), method: :delete, data: {confirm: "WARNING: Deleting this address will cancel all orders associated with it. \n Are you sure you want to delete this address?"} </p>
+  end  -->

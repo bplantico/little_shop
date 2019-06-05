@@ -1,5 +1,14 @@
 <!-- app/views/dashboard/coupons/index.html.erb -->
 
 <h1>Coupons</h1>
+<% if @merchant.coupons.count <= 4 %>
+  <%= link_to "Create A Coupon", new_dashboard_coupon_path %>
+<% else %>
+  <p>You've reached the coupon limit! Please delete a coupon in order to add a new one.</p>
+<% end %>
 
-<%= link_to "Create A Coupon", new_dashboard_coupon_path %>
+<% @coupons.each do |coupon| %>
+  <%= tag.div id: "coupon-#{coupon.id}" do %>
+    <%= render partial: "/dashboard/coupons/coupon_card", locals: {coupon: coupon, img_width: 200} %>
+  <% end %>
+<% end %>

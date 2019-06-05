@@ -25,13 +25,13 @@ Rails.application.routes.draw do
   patch '/profile/edit', to: 'users#update'
   namespace :profile do
     resources :orders, only: [:index, :show, :destroy, :create, :update]
-    resources :addresses, only: [:index, :edit, :destroy, :create, :new, :update]
+    resources :addresses, only: [:index, :edit, :destroy, :new, :create, :update]
   end
 
   namespace :dashboard do
     get '/', to: 'dashboard#index'
 
-    resources :coupons, only: [:index, :new]
+    resources :coupons, only: [:index, :new, :create]
     resources :items
     patch '/items/:id/enable', to: 'items#enable', as: 'enable_item'
     patch '/items/:id/disable', to: 'items#disable', as: 'disable_item'

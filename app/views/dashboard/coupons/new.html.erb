@@ -1,2 +1,19 @@
 <!-- app/views/dashboard/coupons/new.html.erb -->
 <!-- NEW COUPON FORM -->
+
+<%= form_for @coupon, url: dashboard_coupons_path do |f| %>
+
+  <%= f.hidden_field :active, :value => true %>
+
+  <p>
+    <%= f.label :code %>
+    <%= f.text_field :code %>
+  </p>
+
+  <p>
+    <%= f.label :discount_amount %>
+    <%= f.number_field :discount_amount %>
+  </p>
+
+  <%= f.submit "Create Coupon" %>
+<% end %>
